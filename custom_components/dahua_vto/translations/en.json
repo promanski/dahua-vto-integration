@@ -1,0 +1,45 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to your Dahua VTO",
+        "description": "Enter the connection details of your Dahua VTO door station. The integration connects directly over the local network (TCP port 5000 by default) using the DHIP protocol \u2013 the same one used by the DMSS app.",
+        "data": {
+          "host": "Host or IP address",
+          "port": "Port",
+          "username": "Username",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid username or password",
+      "cannot_connect": "Failed to connect to the device",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "This device is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Dahua VTO options",
+        "description": "Comma separated list of door relay channels to expose as buttons (e.g. 1,2).",
+        "data": {
+          "door_channels": "Door channels"
+        }
+      }
+    }
+  },
+  "device_automation": {
+    "trigger_type": {
+      "doorbell_press": "Doorbell pressed",
+      "motion_detected": "Motion detected",
+      "tamper_alarm": "Tamper detected",
+      "call_no_answer": "Call not answered",
+      "call_status": "Call status changed",
+      "door_opened": "Door opened"
+    }
+  }
+}

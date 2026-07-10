@@ -1,0 +1,15 @@
+open_door:
+  name: Open door
+  description: Momentarily unlocks a door relay channel on the Dahua VTO.
+  target:
+    entity:
+      integration: dahua_vto
+      domain: button
+  fields:
+    short_number:
+      name: Short number
+      description: Identifier reported back to the device for the unlock action (used for logging on some VTO models).
+      example: "HA"
+      default: "HA"
+      selector:
+        text:
