@@ -1,0 +1,42 @@
+name: Build and publish Dahua VTO release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check integration files
+        run: |
+          test -f custom_components/dahua_vto/manifest.json
+          test -f custom_components/dahua_vto/__init__.py
+
+      - name: Package integration
+        run: |
+          cd custom_components/dahua_vto
+          zip -r ../../dahua_vto.zip . \
+            -x "*/__pycache__/*" "*.pyc" ".DS_Store"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            gh release upload "$TAG_NAME" dahua_vto.zip --clobber
+          else
+            gh release create "$TAG_NAME" dahua_vto.zip \
+              --title "$TAG_NAME" \
+              --generate-notes
+          fi
